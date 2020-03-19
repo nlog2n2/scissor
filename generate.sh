@@ -36,16 +36,23 @@ touch $SSH_CONFIG_PATH
 chmod 600 $SSH_CONFIG_PATH
 
 echo "5. write ssh config "
-while read line
-do
-    eval echo $line >> $SSH_CONFIG_PATH
-done<<EOS
-"Host $CONNECTION_HOST"
-"  HostName $HOST_NAME"
-"  IdentityFile $SSH_KEY_PATH"
-"  User $USER"
-"  IdentitiesOnly yes"
-EOS
+
+eval echo  "Host $CONNECTION_HOST" >> $SSH_CONFIG_PATH
+eval echo  "\	\	HostName $HOST_NAME" >> $SSH_CONFIG_PATH
+eval echo  "\	\	IdentityFile $SSH_KEY_PATH" >> $SSH_CONFIG_PATH
+eval echo  "\	\	User $USER" >> $SSH_CONFIG_PATH
+eval echo  "\	\	IdentitiesOnly yes" >> $SSH_CONFIG_PATH
+
+#while read line
+#do
+#    eval echo  $line >> $SSH_CONFIG_PATH
+#done<<EOS
+#"Host $CONNECTION_HOST"
+#"\	\	HostName $HOST_NAME"
+#"\	\	IdentityFile $SSH_KEY_PATH"
+#"\	\	User $USER"
+#"\	\	IdentitiesOnly yes"
+#EOS
 
 echo "6. setting ssh agent "
 number_of_ssh_agents=`ps aux | grep ssh-agent | grep -v grep | wc -l`
