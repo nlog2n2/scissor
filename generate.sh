@@ -36,47 +36,23 @@ touch $SSH_CONFIG_PATH
 chmod 600 $SSH_CONFIG_PATH
 
 echo "5. write ssh config "
-
 eval echo  "Host $CONNECTION_HOST" >> $SSH_CONFIG_PATH
-eval echo  "\	\	HostName $HOST_NAME" >> $SSH_CONFIG_PATH
-eval echo  "\	\	IdentityFile $SSH_KEY_PATH" >> $SSH_CONFIG_PATH
-eval echo  "\	\	User $USER" >> $SSH_CONFIG_PATH
-eval echo  "\	\	IdentitiesOnly yes" >> $SSH_CONFIG_PATH
-
-#while read line
-#do
-#    eval echo  $line >> $SSH_CONFIG_PATH
-#done<<EOS
-#"Host $CONNECTION_HOST"
-#"\	\	HostName $HOST_NAME"
-#"\	\	IdentityFile $SSH_KEY_PATH"
-#"\	\	User $USER"
-#"\	\	IdentitiesOnly yes"
-#EOS
-
-echo "6. setting ssh agent "
-number_of_ssh_agents=`ps aux | grep ssh-agent | grep -v grep | wc -l`
-if [ $number_of_ssh_agents -eq 0 ] ; then
-    eval "$(ssh-agent -s)"
-fi
-
-echo $passpharase > $SSH_KEY_PATH.$TIMESTAMP
-
-expect -c "
-set timeout 5
-spawn ssh-add ${SSH_KEY_PATH}
-expect -re \"^Enter.*:\"
-send \"$passpharase\n\"
-expect \"$\"
-exit 0
-"
+eval echo  "\	HostName $HOST_NAME" >> $SSH_CONFIG_PATH
+eval echo  "\	IdentityFile $SSH_KEY_PATH" >> $SSH_CONFIG_PATH
+eval echo  "\	User $USER" >> $SSH_CONFIG_PATH
+eval echo  "\	IdentitiesOnly yes" >> $SSH_CONFIG_PATH
 
 # view public key
-echo "7. view public key "
+echo "6. view public key "
+echo "==================================="
 eval cat "$SSH_KEY_PATH.pub"
+echo $passpharase > $SSH_KEY_PATH.$TIMESTAMP
+
 echo "==================================="
-echo "8. complete  "
+echo "7. complete  "
 echo "==================================="
-echo "excute this test command on your terminal" 
+echo "excute this test command on your terminal"
+eval echo eval 'ssh-agent -s'
+eval echo ssh-add $SSH_KEY_PATH
 echo ssh -T "$USER@$HOST_NAME"
 echo "password: $passpharase"
