@@ -52,7 +52,8 @@ echo "==================================="
 echo "7. complete  "
 echo "==================================="
 echo "excute this test command on your terminal"
-eval echo eval 'ssh-agent -s'
+#eval echo eval 'ssh-agent -s' あとで修正　eval "$(ssh-agent -s)"が表示されるように
 eval echo ssh-add $SSH_KEY_PATH
 echo ssh -T "$USER@$HOST_NAME"
 echo "password: $passpharase"
+echo "==================================="
