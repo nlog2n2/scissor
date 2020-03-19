@@ -13,6 +13,10 @@ USER=git
 # key create timestamp
 TIMESTAMP=`date "+%Y%m%d-%H%M%S"`
 
+# GitHub setting
+GITHUB_USER=nlog2n2
+REPO_NAME=scissor
+
 echo "1. check install expect"
 if ! sudo dnf list --installed expect | grep expect > /dev/null; then
     sudo dnf install -y expect
@@ -52,8 +56,10 @@ echo "==================================="
 echo "7. complete  "
 echo "==================================="
 echo "excute this test command on your terminal"
-#eval echo eval 'ssh-agent -s' あとで修正　eval "$(ssh-agent -s)"が表示されるように
+eval echo 'eval \$\(ssh-agent -s\)' 
 eval echo ssh-add $SSH_KEY_PATH
 echo ssh -T "$USER@$HOST_NAME"
 echo "password: $passpharase"
+echo "git remote -v "
+echo "git remote set-url origin git@github.com:$GITHUB_USER/$REPO_NAME"
 echo "==================================="
